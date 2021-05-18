@@ -3,6 +3,9 @@
 # replace the normal cat
 which bat >/dev/null && alias cat=bat
 
+# for resetting some audio stuff
+which alsa >/dev/null && alias audio-reload="sudo alsa force-reload"
+
 # Disable globbing on the remote path. because scp is broken
 # with zsh globbing-features
 alias scp='noglob scp_wrap'

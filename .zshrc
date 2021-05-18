@@ -48,7 +48,7 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "romkatv/powerlevel10k", from:github, depth:1, as:theme
 zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
-  # check first if grc does exist 
+  # check first if grc does exist
   which grc >/dev/null 2>&1 && \
 zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"unset -f kubectl"
   # needs: go installed, gopath set, gopath/bin in $PATH
@@ -68,22 +68,29 @@ zplug "ohmyzsh/ohmyzsh", depth:1, from:github, use:"lib/completion.zsh"
 # Skip forward/back a word with CTRL-arrow
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+# adding backward-tab on menu completion
+bindkey "^[[Z" reverse-menu-complete
+
 
 # End of Zplug stuff
 zplug load
 zplug check --verbose
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"
 
 #
 # === Personal Stuff ====
 #
-source /home/nathanael/.DevOpsTools/dot-zshrc.zsh
 
-alias audio-reload="sudo alsa force-reload"
 export PATH="$HOME/.tfenv/bin:$PATH"
 export PATH="$HOME/.tgenv/bin:$PATH"
+
+# stuff from DevOpsTools
 source "/home/nathanael/GIT/oscf/stuff-to-source.source"
+source /home/nathanael/.DevOpsTools/dot-zshrc.zsh
+
+
 # BEGIN ANSIBLE MANAGED BLOCK
 # Created by markosamuli.gcloud Ansible role
 if [ -d "$HOME/.google/google-cloud-sdk" ]; then

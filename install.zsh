@@ -17,3 +17,10 @@ repoPath = $(dirname "$fullPath")
 
 ln -s "$fullPath/.zshrc" "$HOME/.zshrc"
 ln -s "$fullPath/.aliases" "$HOME/.aliases"
+
+#
+# V I M stuff
+#
+
+mkdir -p "$HOME/.vim/color"
+wget https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim -o .vim/colors/solarized.vim -q
