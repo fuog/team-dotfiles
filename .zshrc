@@ -44,23 +44,24 @@ source "$HOME/.zplug/init.zsh"
 
 # plugin self management
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-# Theme for zsh
+# Theme for zsh, best font to use is "hack nerd font" see https://www.nerdfonts.com
 zplug "romkatv/powerlevel10k", from:github, depth:1, as:theme
 zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
   # check first if grc does exist
   which grc >/dev/null 2>&1 && \
 zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"unset -f kubectl"
-  # needs: go installed, gopath set, gopath/bin in $PATH
-  which fzf >/dev/null 2>&1 || go get github.com/junegunn/fzf
-zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
+# needs: go installed, gopath set, gopath/bin in $PATH
+which fzf >/dev/null 2>&1 || go get github.com/junegunn/fzf
+  zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
 zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, depth:1, use:"zsh-history-substring-search.zsh"
   # ^[[A was not possible somehow, but with ctrl it was. this method works in any case
   bindkey "$terminfo[kcuu1]" history-substring-search-up
   bindkey "$terminfo[kcud1]" history-substring-search-down
-zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh"
 zplug "MenkeTechnologies/zsh-expand", defer:2, from:github, use:"zsh-expand.plugin.zsh"
-  # also makes autocompletion for kubectl, some fixes to make it work without oh-my-zsh
+# Conditional kubectl plugins: add kubectx and kubens, makes autocompletion for kubectl and some fixes to make it work without oh-my-zsh
+which kubectl >/dev/null 2>&1 && \
+  zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh" && \
   zplug "Dbz/kube-aliases", from:github, use:"kube-aliases.plugin.zsh", hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'"
 ## adding some completion details from ohmyzsh
 zplug "ohmyzsh/ohmyzsh", depth:1, from:github, use:"lib/completion.zsh"
@@ -70,7 +71,6 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 # adding backward-tab on menu completion
 bindkey "^[[Z" reverse-menu-complete
-
 
 # End of Zplug stuff
 zplug load
@@ -85,6 +85,11 @@ zplug check --verbose
 
 export PATH="$HOME/.tfenv/bin:$PATH"
 export PATH="$HOME/.tgenv/bin:$PATH"
+
+# Use VSCode for "kubectl edit ..." but only if kubectl and code do exist
+which kubectl >/dev/null 2>&1 && \
+  which code >/dev/null 2>&1 && \
+    KUBE_EDITOR="code -w"; export KUBE_EDITOR
 
 # stuff from DevOpsTools
 source "/home/nathanael/GIT/oscf/stuff-to-source.source"
