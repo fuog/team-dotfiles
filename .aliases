@@ -18,3 +18,8 @@ function scp_wrap {
   esac; done
   command scp "${(@)args}"
 }
+
+
+# simple aliases
+# use '' for vars to be resolved at runtime
+alias reload-shell='exec ${SHELL}'

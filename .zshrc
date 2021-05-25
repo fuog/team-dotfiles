@@ -1,13 +1,6 @@
 # Nathanael's personal zshrc
 #
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # some history configurations
 export HISTFILE=~/.zsh_history # Where it gets saved
 export HISTSIZE=10000
@@ -23,21 +16,33 @@ setopt hist_save_no_dups # Don't write duplicate entries in the history file.
 setopt share_history # share history between multiple shells
 setopt HIST_IGNORE_SPACE # Don't record an entry starting with a space.
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # add aliases
-source "${HOME}/.aliases"
+test -f "${HOME}/.aliases" && source "${HOME}/.aliases"
+
+# get zplug if missing
+test -f "$HOME/.zplug/init.zsh" || git clone "https://github.com/zplug/zplug.git" "$HOME/.zplug"
 
 # start loading zplug
-source ~/.zplug/init.zsh
+source "$HOME/.zplug/init.zsh"
 
 # Enable colors and change prompt:
 autoload -U colors && colors
 
-export EDITOR=code
-export GOPATH=$HOME/.golib
-export PATH=$PATH:$GOPATH/bin
+which code >/dev/null 2>&1 && \
+  export EDITOR=code
+mkdir -p "$HOME/.golib"
+export GOPATH="$HOME/.golib"
+export PATH="$PATH:$GOPATH/bin"
 
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/nathanael/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 
 # End of lines added by compinstall
 source "$HOME/.zplug/init.zsh"
@@ -46,23 +51,36 @@ source "$HOME/.zplug/init.zsh"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # Theme for zsh, best font to use is "hack nerd font" see https://www.nerdfonts.com
 zplug "romkatv/powerlevel10k", from:github, depth:1, as:theme
-zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh"
+# never load the ssh-agent if we are on a remote connection
+if [ -n "$SSH_CLIENT"] ; then
+  zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh"
+fi
+
 zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
-  # check first if grc does exist
-  which grc >/dev/null 2>&1 && \
-zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"unset -f kubectl"
+
+
+# check first if grc does exist
+if which grc >/dev/null 2>&1 ;then
+  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"unset -f kubectl"
+fi
 # needs: go installed, gopath set, gopath/bin in $PATH
 which fzf >/dev/null 2>&1 || go get github.com/junegunn/fzf
   zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
+
 zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, depth:1, use:"zsh-history-substring-search.zsh"
   # ^[[A was not possible somehow, but with ctrl it was. this method works in any case
   bindkey "$terminfo[kcuu1]" history-substring-search-up
   bindkey "$terminfo[kcud1]" history-substring-search-down
+
 zplug "MenkeTechnologies/zsh-expand", defer:2, from:github, use:"zsh-expand.plugin.zsh"
+
 # Conditional kubectl plugins: add kubectx and kubens, makes autocompletion for kubectl and some fixes to make it work without oh-my-zsh
-which kubectl >/dev/null 2>&1 && \
-  zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh" && \
+if which kubectl >/dev/null 2>&1 ; then
+  zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh"
+fi
+if which kubectl >/dev/null 2>&1 ; then
   zplug "Dbz/kube-aliases", from:github, use:"kube-aliases.plugin.zsh", hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'"
+fi
 ## adding some completion details from ohmyzsh
 zplug "ohmyzsh/ohmyzsh", depth:1, from:github, use:"lib/completion.zsh"
 
@@ -83,8 +101,9 @@ zplug check --verbose
 # === Personal Stuff ====
 #
 
-export PATH="$HOME/.tfenv/bin:$PATH"
-export PATH="$HOME/.tgenv/bin:$PATH"
+test -d "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH"
+test -d "$HOME/.tfenvlocal/bin" && export PATH="$HOME/.tfenv/bin:$PATH"
+test -d "$HOME/.tgenvlocal/bin" && export PATH="$HOME/.tgenv/bin:$PATH"
 
 # Use VSCode for "kubectl edit ..." but only if kubectl and code do exist
 which kubectl >/dev/null 2>&1 && \
@@ -106,4 +125,3 @@ if [ -d "$HOME/.google/google-cloud-sdk" ]; then
   source $CLOUDSDK_ROOT_DIR/completion.zsh.inc
 fi
 # END ANSIBLE MANAGED BLOCK
-

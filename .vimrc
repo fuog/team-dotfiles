@@ -8,10 +8,10 @@ set nocompatible
 set number
 
 " show courser line
-set cursorline
+"set cursorline
 
 " show cursor column -- looks like this makes things slower
-set cursorcolumn
+" set cursorcolumn
 
 " simulate a linebreak if line gets too long
 set wrap
