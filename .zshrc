@@ -1,6 +1,9 @@
 # Nathanael's personal zshrc
 #
 
+test -f /etc/profile.d/10_proxy_settings.sh && \
+  source /etc/profile.d/10_proxy_settings.sh
+
 # some history configurations
 export HISTFILE=~/.zsh_history # Where it gets saved
 export HISTSIZE=10000
@@ -52,7 +55,7 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # Theme for zsh, best font to use is "hack nerd font" see https://www.nerdfonts.com
 zplug "romkatv/powerlevel10k", from:github, depth:1, as:theme
 # never load the ssh-agent if we are on a remote connection
-if [ -n "$SSH_CLIENT"] ; then
+if [ -z "$SSH_CLIENT" ] ; then
   zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh"
 fi
 
