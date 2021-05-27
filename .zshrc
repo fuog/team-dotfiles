@@ -26,9 +26,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# add aliases
-test -f "${HOME}/.aliases" && source "${HOME}/.aliases"
-
 # get zplug if missing
 test -f "$HOME/.zplug/init.zsh" || git clone "https://github.com/zplug/zplug.git" "$HOME/.zplug"
 
@@ -105,17 +102,29 @@ zplug check --verbose
 #
 
 test -d "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH"
-test -d "$HOME/.tfenvlocal/bin" && export PATH="$HOME/.tfenv/bin:$PATH"
-test -d "$HOME/.tgenvlocal/bin" && export PATH="$HOME/.tgenv/bin:$PATH"
+test -d "$HOME/.tfenv/bin" && export PATH="$HOME/.tfenv/bin:$PATH"
+test -d "$HOME/.tgenv/bin" && export PATH="$HOME/.tgenv/bin:$PATH"
 
 # Use VSCode for "kubectl edit ..." but only if kubectl and code do exist
 which kubectl >/dev/null 2>&1 && \
   which code >/dev/null 2>&1 && \
     KUBE_EDITOR="code -w"; export KUBE_EDITOR
 
+which helm >/dev/null 2>&1 && \
+  source <(helm completion zsh)
+
+
+autoload -U +X bashcompinit && bashcompinit
+if which terraform >/dev/null 2>&1 ; then
+  terraform_path=$(whereis terraform | awk '{print $NF }')
+  complete -o nospace -C $terraform_path terraform tf
+  # https://github.com/gruntwork-io/terragrunt/issues/689#issuecomment-822455663
+  complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg
+fi
+
 # stuff from DevOpsTools
-source "/home/nathanael/GIT/oscf/stuff-to-source.source"
-source /home/nathanael/.DevOpsTools/dot-zshrc.zsh
+test -f $HOME/GIT/oscf/stuff-to-source.source && source $HOME/GIT/oscf/stuff-to-source.source
+test -f /home/nathanael/.DevOpsTools/dot-zshrc.zsh && source /home/nathanael/.DevOpsTools/dot-zshrc.zsh
 
 
 # BEGIN ANSIBLE MANAGED BLOCK
@@ -128,3 +137,6 @@ if [ -d "$HOME/.google/google-cloud-sdk" ]; then
   source $CLOUDSDK_ROOT_DIR/completion.zsh.inc
 fi
 # END ANSIBLE MANAGED BLOCK
+
+# add aliases
+test -f "${HOME}/.aliases" && source "${HOME}/.aliases"

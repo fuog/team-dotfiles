@@ -6,6 +6,11 @@ which batcat >/dev/null && alias cat=batcat
 # for resetting some audio stuff
 which alsa >/dev/null && alias audio-reload="sudo alsa force-reload"
 
+# Tarra-stuff
+which terraform >/dev/null && alias tf="terraform"
+which terragrunt >/dev/null && alias tg="terragrunt"
+
+
 # Disable globbing on the remote path. because scp is broken
 # with zsh globbing-features
 alias scp='noglob scp_wrap'
