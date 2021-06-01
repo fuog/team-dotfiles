@@ -8,7 +8,10 @@ i only try to save files that contain content i configured for my use. NO conten
 
 ### ZSH Usage
 
-No Oh-my-zsh is used but zplug. oh-my-zsh is in some cases sourced where i found the scripts usefull
+- No Oh-my-zsh is used but zplug.
+- Oh-my-zsh stuff is in some cases sourced where i found the scripts usefull
+- every external dependency sould be checked and skiped if not found
+
 
 ## Links
 
