@@ -75,11 +75,14 @@ zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, depth:1, u
 zplug "MenkeTechnologies/zsh-expand", defer:2, from:github, use:"zsh-expand.plugin.zsh"
 
 # Conditional kubectl plugins: add kubectx and kubens, makes autocompletion for kubectl and some fixes to make it work without oh-my-zsh
-if which kubectl >/dev/null 2>&1 ; then
+if command -v kubectl >/dev/null 2>&1 ; then
   zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh"
 fi
-if which kubectl >/dev/null 2>&1 ; then
+if command -v kubectl >/dev/null 2>&1 ; then
   zplug "Dbz/kube-aliases", from:github, use:"kube-aliases.plugin.zsh", hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'"
+fi
+if command -v minikube >/dev/null 2>&1 ; then
+  source <(minikube completion zsh)
 fi
 ## adding some completion details from ohmyzsh
 zplug "ohmyzsh/ohmyzsh", depth:1, from:github, use:"lib/completion.zsh"
@@ -122,11 +125,6 @@ if which terraform >/dev/null 2>&1 ; then
   complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg
 fi
 
-# stuff from DevOpsTools
-test -f $HOME/GIT/oscf/stuff-to-source.source && source $HOME/GIT/oscf/stuff-to-source.source
-test -f /home/nathanael/.DevOpsTools/dot-zshrc.zsh && source /home/nathanael/.DevOpsTools/dot-zshrc.zsh
-
-
 # BEGIN ANSIBLE MANAGED BLOCK
 # Created by markosamuli.gcloud Ansible role
 if [ -d "$HOME/.google/google-cloud-sdk" ]; then
@@ -140,3 +138,12 @@ fi
 
 # add aliases
 test -f "${HOME}/.aliases" && source "${HOME}/.aliases"
+
+# adding DevOps-Tools rc file
+test -f "${HOME}/.DevOpsTools/included_rc.sh" && source "${HOME}/.DevOpsTools/included_rc.sh"
+# stuff from DevOpsTools
+test -f "$HOME/GIT/oscf/stuff-to-source.source" && source "$HOME/GIT/oscf/stuff-to-source.source"
+test -f "$HOME/git/oscf/stuff-to-source.source" && source "$HOME/git/oscf/stuff-to-source.source"
+
+
+test -d "${HOME}/.krew" && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
