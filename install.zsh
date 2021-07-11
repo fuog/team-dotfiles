@@ -17,7 +17,7 @@ fi
 
 # Download dotfiles Repo
 if ! test -d "$DOTFILES_REPO"; then
-	git -C "$DOTFILES_REPO" clone "https://github.com/fuog/dotfiles.git"
+	git clone "https://github.com/fuog/dotfiles.git" "$DOTFILES_REPO"
 fi
 
 # remove zshrc links
