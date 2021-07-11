@@ -11,20 +11,6 @@ command -v alsa >/dev/null 2>&1 && alias audio-reload="sudo alsa force-reload"
 command -v terraform >/dev/null 2>&1 && alias tf="terraform"
 command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"
 
-
-# Disable globbing on the remote path. because scp is broken
-# with zsh globbing-features
-alias scp='noglob scp_wrap'
-function scp_wrap {
-  local -a args
-  local i
-  for i in "$@"; do case $i in
-    (*:*) args+=($i) ;;
-    (*) args+=(${~i}) ;;
-  esac; done
-  command scp "${(@)args}"
-}
-
 # simple aliases
 # use '' for vars to be resolved at runtime
 alias reload-shell='exec ${SHELL}'

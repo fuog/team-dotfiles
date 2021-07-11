@@ -1,26 +1,33 @@
 #!/bin/zsh
 #
 # Install dotfiles
-#
-# not ready jet
-if [ -f "$HOME/.zshrc" ]; then mv "$HOME/.zshrc" "$HOME/.zshrc.old" fi
-if [ -f "$HOME/.zshrc" ]; then mv "$HOME/.zshrc" "$HOME/.zshrc.old" fi
 
-# get the current path for both shells
-relativePath="${BASH_SOURCE[0]}"
-if [ -z "$relativePath" ]; then
-	# ZSH way of getting the same path
-	relativePath="$0"
+# default path
+DOTFILES_REPO= "$HOME/git/dotfiles"
+
+# override path by $1
+if test -n "$1"; then
+	if ! test -d "$(dirname "$1")"; then
+		echo "ERROR: $1 is does not work as git folder"
+		echo "       will use default $DOTFILES_REPO .."
+		sleep 3 # give some time to cancle
+	fi
+	DOTFILES_REPO="$1"
 fi
-fullPath = $(realpath "$relativePath")
-repoPath = $(dirname "$fullPath")
 
-ln -s "$fullPath/.zshrc" "$HOME/.zshrc"
-ln -s "$fullPath/.aliases" "$HOME/.aliases"
+# Download dotfiles Repo
+if ! test -d "$DOTFILES_REPO"
+	git -C "$DOTFILES_REPO" clone "https://github.com/fuog/dotfiles.git"
+fi
 
-#
-# V I M stuff
-#
+# remove zshrc links
+test -L "$HOME/.zshrc" \
+	&& rm "$HOME/.zshrc"
+# move zshrc files
+test -f "$HOME/.zshrc" \
+	&& mv "$HOME/.zshrc" "$HOME/.zshrc.old"
 
-mkdir -p "$HOME/.vim/color"
-wget https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim -o .vim/colors/solarized.vim -q
+# create new link
+ln -s "$DOTFILES_REPO/main-rc.zsh" "$HOME/.zshrc"
+
+echo "NOW do a :  exec \$SHELL"
