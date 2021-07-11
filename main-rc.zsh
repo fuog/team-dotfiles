@@ -83,7 +83,7 @@ if command -v grc >/dev/null 2>&1 ;then
 fi
 
 # needs: go installed, gopath set, gopath/bin in $PATH
-which fzf >/dev/null 2>&1 || go get github.com/junegunn/fzf
+command -v go >/dev/null 2>&1 && command -v fzf >/dev/null 2>&1 || go get github.com/junegunn/fzf
   zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
 
 zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, depth:1, use:"zsh-history-substring-search.zsh"
@@ -167,6 +167,9 @@ fi
 
 # adding DevOps-Tools rc file
 test -f "${HOME}/.DevOpsTools/included_rc.sh" && source "${HOME}/.DevOpsTools/included_rc.sh"
-if ! test -f "$HOME/GIT/oscf/stuff-to-source.source" && source "$HOME/GIT/oscf/stuff-to-source.source" ; then
+if test -d "$HOME/git"; then
+test -f "$HOME/GIT/oscf/stuff-to-source.source" && source "$HOME/GIT/oscf/stuff-to-source.source"
+elif test -d if test -d "$HOME/GIT"; then
 test -f "$HOME/git/oscf/stuff-to-source.source" && source "$HOME/git/oscf/stuff-to-source.source"
 fi
+
