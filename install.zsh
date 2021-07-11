@@ -3,7 +3,7 @@
 # Install dotfiles
 
 # default path
-DOTFILES_REPO= "$HOME/git/dotfiles"
+DOTFILES_REPO="$HOME/git/dotfiles"
 
 # override path by $1
 if test -n "$1"; then
@@ -16,7 +16,7 @@ if test -n "$1"; then
 fi
 
 # Download dotfiles Repo
-if ! test -d "$DOTFILES_REPO"
+if ! test -d "$DOTFILES_REPO"; then
 	git -C "$DOTFILES_REPO" clone "https://github.com/fuog/dotfiles.git"
 fi
 

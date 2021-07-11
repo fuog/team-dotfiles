@@ -43,7 +43,6 @@ setopt HIST_IGNORE_SPACE # Don't record an entry starting with a space.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
 # get zplug if missing
 test -f "$HOME/.zplug/init.zsh" || git clone "https://github.com/zplug/zplug.git" "$HOME/.zplug"
 
@@ -58,6 +57,11 @@ zstyle :compinstall filename "$HOME/.zshrc"
 
 # End of lines added by compinstall
 source "$HOME/.zplug/init.zsh"
+
+# == source the additional stuff ==========
+test -f "$HOME/.zshrc_additionals" \
+  && source "$HOME/.zshrc_additionals"
+# =========================================
 
 # plugin self management
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -110,10 +114,6 @@ bindkey "^[[1;5D" backward-word
 
 # adding backward-tab on menu completion
 bindkey "^[[Z" reverse-menu-complete
-
-# source the additional stuff
-test -f "$HOME/.zshrc_additionals" \
-  && source "$HOME/.zshrc_additionals"
 
 # End of Zplug stuff
 zplug load
