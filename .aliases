@@ -1,14 +1,15 @@
 #!/bin/bash
 
 # replace the normal cat
-which bat >/dev/null && alias cat=bat
-which batcat >/dev/null && alias cat=batcat
+command -v bat >/dev/null 2>&1 && alias cat=bat
+command -v batcat >/dev/null 2>&1 && alias cat=batcat
+
 # for resetting some audio stuff
-which alsa >/dev/null && alias audio-reload="sudo alsa force-reload"
+command -v alsa >/dev/null 2>&1 && alias audio-reload="sudo alsa force-reload"
 
 # Tarra-stuff
-which terraform >/dev/null && alias tf="terraform"
-which terragrunt >/dev/null && alias tg="terragrunt"
+command -v terraform >/dev/null 2>&1 && alias tf="terraform"
+command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"
 
 
 # Disable globbing on the remote path. because scp is broken
@@ -23,7 +24,6 @@ function scp_wrap {
   esac; done
   command scp "${(@)args}"
 }
-
 
 # simple aliases
 # use '' for vars to be resolved at runtime
