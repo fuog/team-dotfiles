@@ -24,12 +24,10 @@ fi
 
 # p10k file linking
 if ! [ "$(realpath "$HOME/.p10k.zsh")" = "$DOTFILES_REPO/p10k/$P10K" ]; then
-    echo foo
     test -L "$HOME/.p10k.zsh" && rm "$HOME/.p10k.zsh"
     test -f "$HOME/.p10k.zsh" && mv "$HOME/.p10k.zsh" "$HOME/.p10k.zsh.old"
     test -f "$DOTFILES_REPO/p10k/$P10K" \
       && ln -s "$DOTFILES_REPO/p10k/$P10K" "$HOME/.p10k.zsh"
-      echo fooo2
 fi
 
 # .vimrc file linking
