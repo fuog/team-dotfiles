@@ -1,6 +1,14 @@
 # Fuog's Dotfiles
 
-This dotfiles are only tested with Ubuntu Linux 21.04 and may also require tools that are not installed by this Repo. Usage by your own risk.
+The idea behind this Repo is to share a zshrc between firends and multiple devices. You will need to have some shared intressed in "how" a basic "shared-zshrc" should look like while also leaving space for personal stuff that others dont whant or you would not need on other devices.
+
+It's more or less a "let's colaborate on semi-personal stuff"
+
+This repo will also respect code that is added by other tools to the main `.zshrc` while updating its own part.
+
+## Disclaimer
+
+This repo tested with Ubuntu Linux 21.04 and may also require tools that are not installed by this Repo. Usage by your own risk.
 
 ## install prerequisites
 
