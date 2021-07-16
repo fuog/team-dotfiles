@@ -1,6 +1,6 @@
 # Fuog's Dotfiles
 
-The idea behind this Repo is to share a zshrc between firends and multiple devices. You will need to have some shared intressed in "how" a basic "shared-zshrc" should look like while also leaving space for personal stuff that others dont whant or you would not need on other devices.
+The idea behind this Repo is to share a zshrc between firends and multiple devices. You will need to have some shared-intrest in "how" a basic "shared-zshrc" should look like while also leaving space for personal stuff that others dont whant or you would not need on other devices.
 
 It's more or less a "let's colaborate on semi-personal stuff"
 
