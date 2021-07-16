@@ -1,4 +1,4 @@
-# Nathanaels Dotfiles
+# Fuog's Dotfiles
 
 This dotfiles are only tested with Ubuntu Linux 21.04 and may also require tools that are not installed by this Repo. Usage by your own risk.
 
