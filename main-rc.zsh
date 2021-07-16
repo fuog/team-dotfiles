@@ -70,7 +70,7 @@ zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
 
 # check first if grc does exist
 if command -v grc >/dev/null 2>&1 ;then
-  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"unset -f kubectl"
+  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl"
 fi
 
 # needs: go installed, gopath set, gopath/bin in $PATH

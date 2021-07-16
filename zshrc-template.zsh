@@ -8,7 +8,7 @@ export DOTFILES_P10K=""
 export DOTFILES_VIMRC=""
 
 # execute some of the scripts
-"${DOTFILES_REPO}/link-dotfiles.zsh" &
+("${DOTFILES_REPO}/link-dotfiles.zsh" &) &> /dev/null
 # Source zsh files
 source "${DOTFILES_REPO}/main-rc.zsh" \
     || echo "ERROR: sourcing main-rc!"
