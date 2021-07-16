@@ -42,6 +42,17 @@ $SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install
 $SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh") "$HOME/git/private/dotfiles" # for custom locations
 ```
 
+## more C&P
+
+Example1 for setting all up in one blow
+
+```bash
+mkdir -p "$HOME/git";
+$SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh")
+exec $SHELL
+dotfiles vimrc fuog-default.vimrc; dotfiles p10k fuog-full.zsh; dotfiles additionals fuog-default.zsh
+```
+
 ## dotfiles tool usage
 
 After Install, you can use a tool for selecting your personal files. Just add your personal files to the folders and activate them.

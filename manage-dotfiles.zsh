@@ -86,8 +86,7 @@ dotfiles() {
       return 1
     fi
     if test -f "$DOTFILES_REPO/vimrc/$DOTFILES_VIMRC"; then
-      echo "Setting P10K-File to .zshrc"
-      echo " you may need to    exec \$SHELL   for changes to take effect"
+      echo "Setting VIMRC-File to .zshrc"
       if ! sed -i "s/export DOTFILES_VIMRC=\".*\"/export DOTFILES_VIMRC=\"${DOTFILES_VIMRC}\"/" "${HOME}/.zshrc"; then
         echo -e "${RED}ERROR${RESTORE}: updating the Settings failed!"
         return
