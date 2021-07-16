@@ -2,7 +2,8 @@
 # ===========================
 # Fuog's Main ZSHRC file
 # ===========================
-# This Script requires to be symlinked to $HOME/.zshrc
+# Featrues implemented here should be okay to all who use the dotfiles
+# everything that is not for all systems and all users should be in "additionals"
 
 # make sure further rc and dot files are linked correctly
 test -f "$DOTFILES_REPO/linking-rc.zsh" \
