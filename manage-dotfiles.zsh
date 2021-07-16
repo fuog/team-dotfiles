@@ -103,6 +103,11 @@ dotfiles() {
     "${DOTFILES_REPO}/install.zsh"
     ;;
 
+  install)
+    echo " ** running the update script .."
+    "${DOTFILES_REPO}/install.zsh"
+    ;;
+
   scripts)
     echo " ** Not implemented"
     ;;
@@ -115,7 +120,7 @@ dotfiles() {
     echo " ..  vimrc <file>           select or specify the file manually"
 #    echo " ..  scripts <file file2>   select or specify the files manually (multiple)"
 #    echo "                            (not implemented for now)"
-    echo " ..  install                just run the install script again"
+    echo " ..  install/update         just run the install/update script again"
     echo "                            (update repo && update .zshrc template)"
     ;;
   esac

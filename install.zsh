@@ -30,6 +30,7 @@ if ! test -d "$DOTFILES_REPO"; then
 	git clone "https://github.com/fuog/dotfiles.git" "$DOTFILES_REPO"
 else
 	# check if the local repo is behind
+	git -C "$DOTFILES_REPO" fetch --quiet
 	if git -C "$DOTFILES_REPO" status | head -n 2 | grep "branch is behind" ;then
 		# check if the local is unclean
 		if [ "$(git -C "${DOTFILES_REPO}" status --porcelain | wc -l)" != "0" ] \
