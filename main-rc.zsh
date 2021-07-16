@@ -4,19 +4,9 @@
 # ===========================
 # This Script requires to be symlinked to $HOME/.zshrc
 
-# get DOTFILES_REPO
-DOTFILES_REPO="$(dirname "$(realpath "$HOME/.zshrc")")"
-if ! test -d "$DOTFILES_REPO/.git"; then
-  echo "ERROR: \$DOTFILES_REPO is not a git repository"
-fi
-
 # make sure further rc and dot files are linked correctly
 test -f "$DOTFILES_REPO/linking-rc.zsh" \
   && source "$DOTFILES_REPO/linking-rc.zsh"
-
-# source the selected aliases file
-test -f "$HOME/.aliases" \
-  && source "$HOME/.aliases"
 
 # if employeer-proxy; settings need to be set first
 test -f /etc/profile.d/10_proxy_settings.sh && \
@@ -84,7 +74,8 @@ fi
 
 # needs: go installed, gopath set, gopath/bin in $PATH
 command -v go >/dev/null 2>&1 && command -v fzf >/dev/null 2>&1 || go get github.com/junegunn/fzf
-  zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
+command -v fzf >/dev/null 2>&1 \
+  &&  zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
 
 zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, depth:1, use:"zsh-history-substring-search.zsh"
   # ^[[A was not possible somehow, but with ctrl it was. this method works in any case
@@ -153,23 +144,3 @@ function scp_wrap {
   esac; done
   command scp "${(@)args}"
 }
-
-# BEGIN ANSIBLE MANAGED BLOCK
-# Created by markosamuli.gcloud Ansible role
-if [ -d "$HOME/.google/google-cloud-sdk" ]; then
-  export CLOUDSDK_ROOT_DIR="$HOME/.google/google-cloud-sdk"
-  # Update PATH for the Google Cloud SDK.
-  source $CLOUDSDK_ROOT_DIR/path.zsh.inc
-  # Enable zsh completion for gcloud.
-  source $CLOUDSDK_ROOT_DIR/completion.zsh.inc
-fi
-# END ANSIBLE MANAGED BLOCK
-
-# adding DevOps-Tools rc file
-test -f "${HOME}/.DevOpsTools/included_rc.sh" && source "${HOME}/.DevOpsTools/included_rc.sh"
-if test -d "$HOME/git"; then
-test -f "$HOME/GIT/oscf/stuff-to-source.source" && source "$HOME/GIT/oscf/stuff-to-source.source"
-elif test -d if test -d "$HOME/GIT"; then
-test -f "$HOME/git/oscf/stuff-to-source.source" && source "$HOME/git/oscf/stuff-to-source.source"
-fi
-
