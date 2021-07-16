@@ -74,7 +74,8 @@ if command -v grc >/dev/null 2>&1 ;then
 fi
 
 # needs: go installed, gopath set, gopath/bin in $PATH
-command -v go >/dev/null 2>&1 && command -v fzf >/dev/null 2>&1 || go get github.com/junegunn/fzf
+command -v go >/dev/null 2>&1 && ! command -v fzf >/dev/null 2>&1 \
+  && go get github.com/junegunn/fzf
 command -v fzf >/dev/null 2>&1 \
   &&  zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
 
