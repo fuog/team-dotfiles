@@ -84,7 +84,7 @@ if test -n "${DOTFILES_ADDITIONALS}"; then
 	dotfiles additionals "${DOTFILES_ADDITIONALS}"
 else
 	echo " ** 	using default additionals-file \"fuog-default.zsh\""
-	dotfiles additionals "fuog-default.zsh"
+	dotfiles additionals "default.zsh"
 fi
 
 # P10K
@@ -93,7 +93,7 @@ if test -n "${DOTFILES_P10K}"; then
 	dotfiles p10k "${DOTFILES_P10K}"
 else
 	echo " ** 	using default p10k-file \"fuog-full.zsh\""
-	dotfiles p10k "fuog-full.zsh"
+	dotfiles p10k "minimal.zsh"
 fi
 
 # VIMRC
@@ -102,7 +102,7 @@ if test -n "${DOTFILES_VIMRC}"; then
 	dotfiles vimrc "${DOTFILES_VIMRC}"
 else
 	echo " ** 	using default additionals-file \"fuog-default.zsh\""
-	dotfiles vimrc "fuog-default.vimrc"
+	dotfiles vimrc "default.vimrc"
 fi
 
     # dotfiles scripts "${DOTFILES_REPO}" # not implemented
