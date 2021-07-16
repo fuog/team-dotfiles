@@ -102,7 +102,7 @@ dotfiles() {
     "${DOTFILES_REPO}/install.zsh"
     ;;
 
-  install)
+  update)
     echo " ** running the update script .."
     "${DOTFILES_REPO}/install.zsh"
     ;;
