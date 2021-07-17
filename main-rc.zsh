@@ -125,7 +125,8 @@ if command -v terraform >/dev/null 2>&1 ; then
   terraform_path=$(whereis terraform | awk '{print $NF }')
   complete -o nospace -C $terraform_path terraform tf
   # https://github.com/gruntwork-io/terragrunt/issues/689#issuecomment-822455663
-  complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg
+  command -v terragrunt >/dev/null 2>&1 \
+    && complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg
 fi
 
 # helm autocompletion
