@@ -43,26 +43,25 @@ $SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install
 $SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh") "$HOME/git/private/dotfiles" # for custom locations
 ```
 
-## more C&P
+## More Copy&Paste
 
-Example1 for setting all up in one blow
+__Example1__ for setting all up in two blows
 
 ```bash
-mkdir -p "$HOME/git";
-$SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh")
-exec $SHELL
-zplug install
+mkdir -p "$HOME/git"; $SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh")
+```
+
+```bash
 dotfiles vimrc fuog-default.vimrc; dotfiles p10k fuog-full.zsh; dotfiles additionals fuog-default.zsh
 ```
 
-Example2 for setting things up without direct execution.. for some proxy problems ..
+__Example2__ for setting things up without direct execution.. for some proxy problems ..
 
 ```bash
-mkdir -p "$HOME/git";
-git clone https://github.com/fuog/dotfiles.git "$HOME/git/dotfiles"
-$HOME/git/dotfiles/install.zsh
-exec $SHELL
-zplug install
+mkdir -p "$HOME/git"; git clone https://github.com/fuog/dotfiles.git "$HOME/git/dotfiles"; $HOME/git/dotfiles/install.zsh
+```
+
+```bash
 dotfiles vimrc fuog-default.vimrc; dotfiles p10k fuog-full.zsh; dotfiles additionals fuog-default.zsh
 ```
 
