@@ -56,7 +56,7 @@ dotfiles vimrc fuog-default.vimrc; dotfiles p10k fuog-full.zsh; dotfiles additio
 Example2 for setting things up without direct execution.. for some proxy problems ..
 ```bash
 mkdir -p "$HOME/git";
-git clone github.com/fuog/dotfiles "$HOME/git/dotfiles"
+git clone https://github.com/fuog/dotfiles.git "$HOME/git/dotfiles"
 $HOME/git/dotfiles/install.zsh
 exec $SHELL
 zplug install
