@@ -1,5 +1,8 @@
 #!/bin/zsh
-#
+# Script execution check
+test -n "$PS1" \
+	&& echo -e "This script \033[00;31mshould be executed\033[0m not sourced!" && return
+
 # Install dotfiles
 RESTORE='\033[0m'; RED='\033[00;31m'; GREEN='\033[00;32m';
 

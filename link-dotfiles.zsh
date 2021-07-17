@@ -1,5 +1,7 @@
 #!/bin/zsh
-# script executed
+# Script execution check
+test -n "$PS1" \
+	&& echo -e "This script \033[00;31mshould be executed\033[0m not sourced!" && return
 
 # == File linking =========================================
 # Most selected files can be sourced but these here are
