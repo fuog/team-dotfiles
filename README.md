@@ -16,6 +16,7 @@ This Repo does not install any prerequisites for the full features it can load a
 
 - [install and enable ZSH](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH) as your user shells
 - optionals
+  - install [golang](https://golang.org/doc/install) atleast v1.13 (Ubuntu 20.04+), for `fzf`
   - install [kubectl](https://kubernetes.io/docs/tasks/tools/) (any source)
   - install [grc](https://github.com/garabik/grc)
   - install [fzf](https://github.com/junegunn/fzf) ( with `go get github.com/junegunn/fzf` or see [Howto](https://github.com/junegunn/fzf#installation) )
