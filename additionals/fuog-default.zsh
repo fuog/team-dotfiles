@@ -3,18 +3,19 @@
 # in to the other categories
 
 # Setting default editor
-command -v vi >/dev/null 2>&1 && \
-  export EDITOR=vi
-
-# setting go-stuff
-mkdir -p "$HOME/.golib"
-export GOPATH="$HOME/.golib"
-export PATH="$PATH:$GOPATH/bin"
+command -v code >/dev/null 2>&1 && \
+  export EDITOR="code --wait"
 
 # Use VSCode for "kubectl edit ..." but only if kubectl and code do exist
 which kubectl >/dev/null 2>&1 && \
   which code >/dev/null 2>&1 && \
-    KUBE_EDITOR="code -w"; export KUBE_EDITOR
+    KUBE_EDITOR="code --wait"; export KUBE_EDITOR
+
+# setting go-stuff
+if command -v go >/dev/null 2>&1 ; then
+  mkdir -p "$HOME/.golib"
+  export GOPATH="$HOME/.golib"
+  export PATH="$PATH:$GOPATH/bin" ; fi
 
 # replace the normal cat
 command -v bat >/dev/null 2>&1 && alias cat=bat

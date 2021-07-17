@@ -32,10 +32,10 @@ setopt HIST_IGNORE_SPACE # Don't record an entry starting with a space.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ; fi
 # get zplug if missing
-test -f "$HOME/.zplug/init.zsh" || git clone "https://github.com/zplug/zplug.git" "$HOME/.zplug"
+test -f "$HOME/.zplug/init.zsh" \
+  || git clone "https://github.com/zplug/zplug.git" "$HOME/.zplug"
 
 # start loading zplug
 source "$HOME/.zplug/init.zsh"
@@ -48,11 +48,6 @@ zstyle :compinstall filename "$HOME/.zshrc"
 
 # End of lines added by compinstall
 source "$HOME/.zplug/init.zsh"
-
-# == source the additional stuff ==========
-test -f "$HOME/.zshrc_additionals" \
-  && source "$HOME/.zshrc_additionals"
-# =========================================
 
 # plugin self management
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -70,8 +65,7 @@ zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
 
 # check first if grc does exist
 if command -v grc >/dev/null 2>&1 ;then
-  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl"
-fi
+  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl" ; fi
 
 # needs: go installed, gopath set, gopath/bin in $PATH
 command -v go >/dev/null 2>&1 && ! command -v fzf >/dev/null 2>&1 \
@@ -90,13 +84,12 @@ zplug "MenkeTechnologies/zsh-expand", defer:2, from:github, use:"zsh-expand.plug
 # Conditional kubectl plugins: add kubectx and kubens, makes autocompletion for kubectl and some fixes to make it work without oh-my-zsh
 if command -v kubectl >/dev/null 2>&1 ; then
   zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh"
-  zplug "Dbz/kube-aliases", from:github, use:"kube-aliases.plugin.zsh", hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'"
-fi
+  zplug "Dbz/kube-aliases", from:github, use:"kube-aliases.plugin.zsh", \
+    hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'" ; fi
 
 # add autocompletion for minikube
 if command -v minikube >/dev/null 2>&1 ; then
-  source <(minikube completion zsh)
-fi
+  source <(minikube completion zsh) ; fi
 
 ## adding some completion details from ohmyzsh
 zplug "ohmyzsh/ohmyzsh", depth:1, from:github, use:"lib/completion.zsh"
@@ -126,13 +119,13 @@ if command -v terraform >/dev/null 2>&1 ; then
   complete -o nospace -C $terraform_path terraform tf
   # https://github.com/gruntwork-io/terragrunt/issues/689#issuecomment-822455663
   command -v terragrunt >/dev/null 2>&1 \
-    && complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg
-fi
+    && complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg ; fi
 
 # helm autocompletion
-which helm >/dev/null 2>&1 && \
-  source <(helm completion zsh)
+command -v helm >/dev/null 2>&1 \
+  && source <(helm completion zsh)
 
+# https://stackoverflow.com/questions/30840651/what-does-autoload-do-in-zsh
 autoload -U +X bashcompinit && bashcompinit
 
 # Disable globbing on the remote path. because scp is broken
