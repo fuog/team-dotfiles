@@ -57,15 +57,15 @@ zplug "romkatv/powerlevel10k", from:github, depth:1, as:theme
 
 # never load the ssh-agent if we are on a remote connection
 if [ -z "$SSH_CLIENT" ] ; then
-  zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh"
-fi
+  zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh" ; fi
 
 # syntax-highlighting
 zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
 
 # check first if grc does exist
 if command -v grc >/dev/null 2>&1 ;then
-  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl" ; fi
+  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", \
+    hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl" ; fi
 
 # needs: go installed, gopath set, gopath/bin in $PATH
 command -v go >/dev/null 2>&1 && ! command -v fzf >/dev/null 2>&1 \
@@ -73,7 +73,8 @@ command -v go >/dev/null 2>&1 && ! command -v fzf >/dev/null 2>&1 \
 command -v fzf >/dev/null 2>&1 \
   &&  zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
 
-zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, depth:1, use:"zsh-history-substring-search.zsh"
+zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, \
+  depth:1, use:"zsh-history-substring-search.zsh"
   # ^[[A was not possible somehow, but with ctrl it was. this method works in any case
   bindkey "$terminfo[kcuu1]" history-substring-search-up
   bindkey "$terminfo[kcud1]" history-substring-search-down
@@ -101,9 +102,11 @@ bindkey "^[[1;5D" backward-word
 # adding backward-tab on menu completion
 bindkey "^[[Z" reverse-menu-complete
 
-# End of Zplug stuff
+# End of Zplug stuff Load, Install and reload Shell
 zplug load
-zplug check --verbose
+if ! zplug check --verbose ; then
+  zplug install
+  exec $SHELL ; fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"
