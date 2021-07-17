@@ -53,7 +53,9 @@ exec $SHELL
 zplug install
 dotfiles vimrc fuog-default.vimrc; dotfiles p10k fuog-full.zsh; dotfiles additionals fuog-default.zsh
 ```
+
 Example2 for setting things up without direct execution.. for some proxy problems ..
+
 ```bash
 mkdir -p "$HOME/git";
 git clone https://github.com/fuog/dotfiles.git "$HOME/git/dotfiles"
