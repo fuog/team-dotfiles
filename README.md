@@ -10,9 +10,9 @@ This repo will also respect code that is added by other tools to the main `.zshr
 
 This repo tested with Ubuntu Linux 21.04 and may also require tools that are not installed by this Repo. Usage by your own risk.
 
-# How does it Work?
+## How does it Work?
 
-![](docs/dotfiles-diagram.png)
+![dotfiles diagram](docs/dotfiles-diagram.png)
 
 ## install prerequisites
 
@@ -32,7 +32,7 @@ This Repo does not install any prerequisites for the full features it can load a
   - `p10k` for personal p10k styles you would normally find at `$HOME/.p10k.zsh`
   - `additionals` mostly for other zshrc-stuff that is not shared
   - `vimrc` just the config for vimrc to use
-  - (`scripts` not implemented yet)
+  - `scripts` a list of scripts (from `./scripts` ) selected by the user and made available as alias in shell
 - the code should alway check if requierements are met before executing something within the rc
 - a update should always be possible
 - we dont use oh-my-zsh but zplug DONT combine oh-my-zsh with this repo
@@ -76,12 +76,14 @@ After Install, you can use a tool for selecting your personal files. Just add yo
 ```bash
 ❯ dotfiles
 Usage: dotfiles [subcommand]
- ..  repopath <file>        specify the folder manually
- ..  additionals <file>     select or specify the file manually
- ..  p10k <file>            select or specify the file manually
- ..  vimrc <file>           select or specify the file manually
- ..  install                just run the install script again
-                            (update repo && update .zshrc template)
+ ..  repopath <file>            specify the folder manually
+ ..  additionals <file>         select or specify the file manually
+ ..  p10k <file>                select or specify the file manually
+ ..  vimrc <file>               select or specify the file manually
+ ..  scripts "<file1> <file2>"  select or specify the files manually (multiple)
+                                (not implemented for now)
+ ..  install/update             just run the install/update script again
+                                (update repo && update .zshrc template)
 
 ❯ dotfiles additionals my-personal-stuff.zsh
 Setting ADDITIONALS-File to .zshrc

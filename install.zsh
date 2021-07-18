@@ -76,7 +76,7 @@ else
 fi
 
 echo " ** write your configuration back to the managed part"
-source "${DOTFILES_REPO}/manage-dotfiles.zsh"
+source "${DOTFILES_REPO}/manage-dotfiles.zsh" "incl"
 
 # PATH
 echo -n " .. 	" # just for readability
