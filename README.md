@@ -10,6 +10,10 @@ This repo will also respect code that is added by other tools to the main `.zshr
 
 This repo tested with Ubuntu Linux 21.04 and may also require tools that are not installed by this Repo. Usage by your own risk.
 
+# How does it Work?
+
+![](docs/dotfiles-diagram.png)
+
 ## install prerequisites
 
 This Repo does not install any prerequisites for the full features it can load at shell-launch. In most cases, should a dependency not be installed, the feature will just not be activated. Thats why most of the dependencies are "optionals" and will result in a smaller feature-stack if the prerequisites are ignored.
