@@ -18,7 +18,7 @@ if test -n "$1"; then
 # nothing was set
 elif [ -z "$DOTFILES_REPO" ];then
 	echo " ** \$DOTFILES_REPO is not set, will use default"
-	DOTFILES_REPO="$HOME/git/dotfiles"
+	DOTFILES_REPO="$HOME/git/team-dotfiles"
 # DOTFILES_REPO was already set in environment
 else
 	echo " ** \$DOTFILES_REPO is already set in environment"
@@ -30,7 +30,7 @@ sleep 3 # give some time to cancel
 
 # Download dotfiles Repo or update it
 if ! test -d "$DOTFILES_REPO"; then
-	git clone "https://github.com/fuog/dotfiles.git" "$DOTFILES_REPO"
+	git clone "https://github.com/fuog/team-dotfiles.git" "$DOTFILES_REPO"
 else
 	# check if the local repo is behind
 	git -C "$DOTFILES_REPO" fetch --quiet
@@ -42,6 +42,7 @@ else
 			exit 1
 		else
 			echo " ** The dotfiles-repo seams clean, pull updates now.."
+			git -C "${DOTFILES_REPO}" remote set-url origin https://github.com/fuog/team-dotfiles.git
 			sleep 3 # give some time to cancel
 			git -C "${DOTFILES_REPO}" pull
 		fi

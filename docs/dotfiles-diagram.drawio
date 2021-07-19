@@ -13,7 +13,7 @@
         <mxCell id="0D_W91jgBWeG1zWN-o7t-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
           <mxGeometry x="430" y="270" width="280" height="570" as="geometry" />
         </mxCell>
-        <mxCell id="0D_W91jgBWeG1zWN-o7t-4" value="Clone of this Repo&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;eg. $HOME/git/dotfiles&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="0D_W91jgBWeG1zWN-o7t-4" value="Clone of this Repo&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;eg. $HOME/git/team-dotfiles&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="430" y="270" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="0D_W91jgBWeG1zWN-o7t-6" value="" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=bottom;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
