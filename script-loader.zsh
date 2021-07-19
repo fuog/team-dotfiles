@@ -46,10 +46,3 @@ if [ -n "$DOTFILES_SCRIPTS" ]; then
         fi
     done
 fi
-
-# variable="abc,def,ghij"
-# for i in ${variable//,/ }
-# do
-#     # call your procedure/other scripts here below
-#     echo "$i"
-# done
