@@ -32,24 +32,24 @@ command -v alsa >/dev/null 2>&1 && alias audio-reload="sudo alsa force-reload"
 
 # Tarra-stuff
 command -v terraform >/dev/null 2>&1 && alias tf="terraform"
-command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"GOOS=$(go env GOOS)                                                                                                                                                                   82.197.179.12    61%  
-GOARCH=$(go env GOARCH)
-wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-$GOOS-$GOARCH
-sudo install -m 755 kubeseal-$GOOS-$GOARCH /usr/local/bin/kubeseal
-
-
+command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"
 
 # simple aliases
 # use '' for vars to be resolved at runtime
 alias reload-shell='exec ${SHELL}'
 
-# Autoinstall kubeseal if not present b
-if ! command -v kubeseal >/dev/null 2>&1 && ; then
-  GOOS=$(go env GOOS) ; GOARCH=$(go env GOARCH)
-  wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-$GOOS-$GOARCH
+# Autoinstall kubeseal if not present
+if ! command -v kubeseal >/dev/null 2>&1  && command -v kubectl >/dev/null 2>&1  ; then
+  GOOS="linux"
+  GOARCH=$(go env GOARCH)
+  wget "https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-${GOOS}-${GOARCH}"
   sudo install -m 755 kubeseal-$GOOS-$GOARCH /usr/local/bin/kubeseal
   unset GOOS GOARCH
 fi
+
+# adding kubeseal short for privat purpose
+command -v kubeseal >/dev/null 2>&1 && kubectl config get-clusters | grep "Privat-k8s.fuog.net" >/dev/null 2>&1 \
+  alias kubeseal-priv="kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets --format yaml"
 
 
 
