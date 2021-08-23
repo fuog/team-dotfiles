@@ -107,6 +107,13 @@ dotfiles() {
   install)
     echo " ** running the install script .."
     "${DOTFILES_REPO}/install.zsh"
+    echo " ** cleaning all caches .."
+    test -d "${HOME}/.zplug/cache" && \
+      rm -rf "${HOME}/.zplug/cache/*"
+    test -d "${HOME}/.cache/zsh" && \
+      rm -rf "${HOME}/.cache/zsh"
+    test -d "${HOME}/.zsh/cache" && \
+      rm -rf "${HOME}/.zsh/cache/*"
     ;;
 
   update)
