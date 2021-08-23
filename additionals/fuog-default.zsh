@@ -8,12 +8,14 @@ test -z "$PS1" \
 
 # Setting default editor
 command -v code >/dev/null 2>&1 && \
-  export EDITOR="code --wait"
+  export EDITOR="code --wait" || \
+  export EDITOR="vi"
 
 # Use VSCode for "kubectl edit ..." but only if kubectl and code do exist
 which kubectl >/dev/null 2>&1 && \
   which code >/dev/null 2>&1 && \
-    KUBE_EDITOR="code --wait"; export KUBE_EDITOR
+    export KUBE_EDITOR="code --wait" || \
+    export KUBE_EDITOR="vi"
 
 # setting go-stuff
 if command -v go >/dev/null 2>&1 ; then
@@ -30,8 +32,24 @@ command -v alsa >/dev/null 2>&1 && alias audio-reload="sudo alsa force-reload"
 
 # Tarra-stuff
 command -v terraform >/dev/null 2>&1 && alias tf="terraform"
-command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"
+command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"GOOS=$(go env GOOS)                                                                                                                                                                   82.197.179.12    61%  
+GOARCH=$(go env GOARCH)
+wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-$GOOS-$GOARCH
+sudo install -m 755 kubeseal-$GOOS-$GOARCH /usr/local/bin/kubeseal
+
+
 
 # simple aliases
 # use '' for vars to be resolved at runtime
 alias reload-shell='exec ${SHELL}'
+
+# Autoinstall kubeseal if not present b
+if ! command -v kubeseal >/dev/null 2>&1 && ; then
+  GOOS=$(go env GOOS) ; GOARCH=$(go env GOARCH)
+  wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-$GOOS-$GOARCH
+  sudo install -m 755 kubeseal-$GOOS-$GOARCH /usr/local/bin/kubeseal
+  unset GOOS GOARCH
+fi
+
+
+
