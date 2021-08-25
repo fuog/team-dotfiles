@@ -49,7 +49,4 @@ fi
 
 # adding kubeseal short for privat purpose
 command -v kubeseal >/dev/null 2>&1 && kubectl config get-clusters | grep "Privat-k8s.fuog.net" >/dev/null 2>&1 \
-  alias kubeseal-priv="kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets --format yaml"
-
-
-
+  && alias kubeseal-priv="kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets --format yaml"
