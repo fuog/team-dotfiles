@@ -91,7 +91,10 @@ zplug "MenkeTechnologies/zsh-expand", defer:2, from:github, use:"zsh-expand.plug
 if command -v kubectl >/dev/null 2>&1 ; then
   zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh"
   zplug "Dbz/kube-aliases", from:github, use:"kube-aliases.plugin.zsh", \
-    hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'" ; fi
+    hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'" 
+  command -v kustomize   >/dev/null 2>&1 \
+    && source <(kustomize completion zsh)
+fi
 
 # add autocompletion for minikube
 if command -v minikube >/dev/null 2>&1 ; then
