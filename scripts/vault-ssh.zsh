@@ -29,10 +29,27 @@ fi
 
 # Get the cert if it does not exist
 if ! [ -f "$signed_cert" ]; then
+
 	vault write -field=signed_key "$VAULT_SSH_SIGNER" public_key="@$personal_pub" > "$signed_cert" || \
 		( echo "!! Vault error! -- maybe you need to login first \n"; rm "$signed_cert" ; exit 1 )
+	chmod 0600 $signed_cert
 	echo " ** Got a new signed Cert from Vault \n"
 fi
 
-# starting the SSH session with all other given parameters
-ssh -i "$signed_cert" -i "$personal_pub" $@
+
+# embedding vault-ssh directly in to user ssh-config this way vault is authing transparently
+
+# Host some-host
+#     HostName some.hostname.domain.tld
+#     User cloud-admin
+#     ForwardAgent yes
+#     IdentityFile ~/.ssh/id_rsa.pub
+#     IdentityFile ~/.ssh/vault/signed-cert.pub
+#     ProxyCommand sh -c "PROXY_ON=true ~/git/privat/team-dotfiles/scripts/vault-ssh.zsh && /usr/bin/nc %h %p"
+#
+# outcome: ssh some-host
+
+# starting the SSH session if not used in a embedded mode
+if ! [ "$PROXY_ON" = "true" ]; then
+	ssh -i "$signed_cert" -i "$personal_pub" $@
+fi
