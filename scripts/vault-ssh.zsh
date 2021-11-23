@@ -38,6 +38,7 @@ fi
 
 
 # embedding vault-ssh directly in to user ssh-config this way vault is authing transparently
+# there is a bug : first execution when the cert needs to be generated, the ssh command will fail. 2nd run does work.
 
 # Host some-host
 #     HostName some.hostname.domain.tld
