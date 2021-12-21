@@ -31,7 +31,7 @@ command -v batcat >/dev/null 2>&1 && alias cat=batcat
 command -v alsa >/dev/null 2>&1 && alias audio-reload="sudo alsa force-reload"
 
 # adding Azure autocompletion https://gastaud.io/en/article/azure-cli-autocomplete/
-command -v alsa >/dev/null 2>&1 && \
+command -v az >/dev/null 2>&1 && \
   test -f "/etc/bash_completion.d/azure-cli" >/dev/null 2>&1 && \
     source /etc/bash_completion.d/azure-cli
 

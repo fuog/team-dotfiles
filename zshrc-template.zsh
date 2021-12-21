@@ -14,10 +14,10 @@ export DOTFILES_SCRIPTS=""
 # execute some of the scripts
 ("${DOTFILES_REPO}/link-dotfiles.zsh" &) &> /dev/null
 # Source zsh files
-source "${DOTFILES_REPO}/additionals/${DOTFILES_ADDITIONALS}" \
-    || echo "Error: sourcing additionals!"
 source "${DOTFILES_REPO}/main-rc.zsh" \
     || echo "ERROR: sourcing main-rc!"
+source "${DOTFILES_REPO}/additionals/${DOTFILES_ADDITIONALS}" \
+    || echo "Error: sourcing additionals!"
 source "${DOTFILES_REPO}/manage-dotfiles.zsh" \
     || echo "Error: sourcing manage-dotfiles!"
 source "${DOTFILES_REPO}/script-loader.zsh" \
