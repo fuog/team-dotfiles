@@ -68,7 +68,7 @@ zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
 # check first if grc does exist
 if command -v grc >/dev/null 2>&1 ;then
   zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", \
-    hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl" ; fi
+    hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl >/dev/null 2>&1" ; fi
 
 # needs: go installed, gopath set, gopath/bin in $PATH
 command -v go >/dev/null 2>&1 \
@@ -96,8 +96,9 @@ if command -v kubectl >/dev/null 2>&1 ; then
 fi
 
 # add autocompletion for minikube
-if command -v minikube >/dev/null 2>&1 ; then
-  source <(minikube completion zsh) ; fi
+# Buggy in 1.21.0
+# if command -v minikube >/dev/null 2>&1 ; then
+#   source <(minikube completion zsh) ; fi
 
 ## adding some completion details from ohmyzsh
 zplug "ohmyzsh/ohmyzsh", depth:1, from:github, use:"lib/completion.zsh"
@@ -111,7 +112,10 @@ bindkey "^[[Z" reverse-menu-complete
 
 # End of Zplug stuff Load, Install and reload Shell
 zplug load
+
 if ! zplug check --verbose ; then
+  echo "It Looks like we need to install some zplug Stuff"
+  echo "Why?: see team-dotfiles and zplug docs"
   zplug install
   exec $SHELL ; fi
 
