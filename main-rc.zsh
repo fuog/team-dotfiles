@@ -70,11 +70,10 @@ if command -v grc >/dev/null 2>&1 ;then
   zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", \
     hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl" ; fi
 
-# needs: go installed, gopath set, gopath/bin in $PATH, go > 1.12
+# needs: go installed, gopath set, gopath/bin in $PATH
 command -v go >/dev/null 2>&1 \
   && ! command -v fzf >/dev/null 2>&1  \
-    && ! go version | grep go1.10  >/dev/null 2>&1 \
-      && go get github.com/junegunn/fzf
+    && go install github.com/junegunn/fzf@latest
 command -v fzf >/dev/null 2>&1 \
   &&  zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
 
