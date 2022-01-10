@@ -55,3 +55,20 @@ fi
 # adding kubeseal short for privat purpose
 command -v kubeseal >/dev/null 2>&1 && kubectl config get-clusters | grep "Privat-k8s.fuog.net" >/dev/null 2>&1 \
   && alias kubeseal-priv="kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets --format yaml"
+
+# add bw_login
+if command -v bw >/dev/null 2>&1 ; then
+  function bw_login {
+    if ! command -v jq >/dev/null 2>&1 ; then
+      echo "Please install jq.. ⛔" ; return 1 ; fi
+    if [ "$(bw status | jq -r '.status')" = "unlocked" ] ; then
+      echo "already logged in 👍"
+    else
+      bw login 2>/dev/null
+      new_BW_SESSION="$(bw unlock --raw)" && echo "Unlocked 👍"
+      test -n "$new_BW_SESSION" && \
+        export BW_SESSION="${new_BW_SESSION}"
+      unset new_BW_SESSION
+    fi
+  }
+fi
