@@ -8,6 +8,11 @@ test -z "$PS1" \
 # Featrues implemented here should be okay to all who use the dotfiles
 # everything that is not for all systems and all users should be in "additionals"
 
+# Tools that should be installed for the full exp. : zsh, fzf, grc,
+
+# Check if we can reach the internet with HTTPS
+internet_access=true; timeout 1 curl https://ipinfo.io/ip >/dev/null 2>&1 || internet_access=false
+
 # make sure further rc and dot files are linked correctly
 test -f "$DOTFILES_REPO/linking-rc.zsh" \
   && source "$DOTFILES_REPO/linking-rc.zsh"
@@ -34,74 +39,88 @@ setopt HIST_IGNORE_SPACE # Don't record an entry starting with a space.
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ; fi
-# get zplug if missing
-test -f "$HOME/.zplug/init.zsh" \
-  || git clone "https://github.com/zplug/zplug.git" "$HOME/.zplug"
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ; fi
 
-# start loading zplug
-source "$HOME/.zplug/init.zsh"
+# adding some bin paths
+test -d "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH"
+test -d "$HOME/.tfenv/bin" && export PATH="$HOME/.tfenv/bin:$PATH"
+test -d "$HOME/.tgenv/bin" && export PATH="$HOME/.tgenv/bin:$PATH"
+test -d "${HOME}/.krew" && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+
+# Install zi
+zi_home="${HOME}/.zi" && mkdir -p $zi_home
+# Download the Repo if we have internet_access
+test -d "${zi_home}/bin" || ( $internet_access && git clone https://github.com/z-shell/zi.git "${zi_home}/bin" )
+# Do load the 'ZI' cmd if file does exist
+test -f "${zi_home}/bin/zi.zsh" && \
+  source "${zi_home}/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
 
 # Enable colors and change prompt:
 autoload -U colors && colors
 
 # The following lines were added by compinstall
 zstyle :compinstall filename "$HOME/.zshrc"
+# Theme for zsh, example font to use is "hack nerd font" see https://www.nerdfonts.com
+$internet_access && zi ice depth"1"
+$internet_access && zi light romkatv/powerlevel10k
 
-# End of lines added by compinstall
-source "$HOME/.zplug/init.zsh"
-
-# plugin self management
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
-# Theme for zsh, best font to use is "hack nerd font" see https://www.nerdfonts.com
-zplug "romkatv/powerlevel10k", from:github, depth:1, as:theme
-
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+test -f "$HOME/.p10k.zsh" && source "$HOME/.p10k.zsh"
 # never load the ssh-agent if we are on a remote connection
-if [ -z "$SSH_CLIENT" ] ; then
-  zplug "bobsoppe/zsh-ssh-agent", from:github, depth:1, use:"ssh-agent.zsh" ; fi
+test -z "$SSH_CLIENT" && (
+  zi ice depth"1" pick"ssh-agent.zsh"
+  zi light bobsoppe/zsh-ssh-agent )
 
 # syntax-highlighting
-zplug "zsh-users/zsh-syntax-highlighting", from:github, depth:1, at:v0.7.1
+zi ice depth"1" && \
+  zi light z-shell/F-Sy-H
 
 # check first if grc does exist
-if command -v grc >/dev/null 2>&1 ;then
-  zplug "garabik/grc", from:github, depth:1, use:"grc.zsh", \
-    hook-load:"command -v kubectl >/dev/null 2>&1 && unset -f kubectl >/dev/null 2>&1" ; fi
+command -v grc >/dev/null 2>&1 && \
+  zi ice depth"1" pick"grc.zsh" atload"command -v kubectl >/dev/null 2>&1 && unset -f kubectl >/dev/null 2>&1" && \
+    zi light garabik/grc
 
-# needs: go installed, gopath set, gopath/bin in $PATH
-command -v go >/dev/null 2>&1 \
-  && ! command -v fzf >/dev/null 2>&1  \
-    && go install github.com/junegunn/fzf@latest
-command -v fzf >/dev/null 2>&1 \
-  &&  zplug "junegunn/fzf", from:github, depth:1, use:"shell/*.zsh"
+# Load autocompletion and nice fzf key-bindings
+zi ice depth"1" pick"/dev/null" multisrc"shell/{key-bindings,completion}.zsh" && \
+  zi light junegunn/fzf
 
-zplug "zsh-users/zsh-history-substring-search", from:github, defer:1, \
-  depth:1, use:"zsh-history-substring-search.zsh"
-  # ^[[A was not possible somehow, but with ctrl it was. this method works in any case
-  bindkey "$terminfo[kcuu1]" history-substring-search-up
-  bindkey "$terminfo[kcud1]" history-substring-search-down
+
+# Adding the Substing-history lookup
+zi ice depth"1" pick"zsh-history-substring-search.zsh" && \
+  zi light zsh-users/zsh-history-substring-search
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # zsh-expand
-zplug "MenkeTechnologies/zsh-expand", defer:2, from:github, use:"zsh-expand.plugin.zsh"
+zi ice depth"1" pick"zsh-expand.plugin.zsh" && \
+  zi light MenkeTechnologies/zsh-expand
 
-# Conditional kubectl plugins: add kubectx and kubens, makes autocompletion for kubectl and some fixes to make it work without oh-my-zsh
+# Conditional kubectl plugins: add kubectx and kubens, makes autocompletion for kubectl and some fixes to make the plugin work without oh-my-zsh
 if command -v kubectl >/dev/null 2>&1 ; then
-  zplug "unixorn/kubectx-zshplugin", from:github, depth:1, use:"kubectx.plugin.zsh"
-  zplug "Dbz/kube-aliases", from:github, use:"kube-aliases.plugin.zsh", \
-    hook-load:"export KALIAS='$ZPLUG_REPOS/Dbz/kube-aliases'; export KRESOURCES='$ZPLUG_REPOS/Dbz/kube-aliases/docs/resources'" 
-  command -v kustomize   >/dev/null 2>&1 \
+  source <(kubectl completion zsh)
+  zi ice depth"1" pick"kubectx.plugin.zsh" && \
+    zi light unixorn/kubectx-zshplugin
+  zi ice depth"1" pick"kube-aliases.plugin.zsh" atload"export KALIAS='$ZI[PLUGINS_DIR]/Dbz---kube-aliases'; export KRESOURCES='$ZI[PLUGINS_DIR]/Dbz---kube-aliases/docs/resources'" && \
+    zi light Dbz/kube-aliases && \
+      complete -F __start_kubectl k
+  command -v kustomize >/dev/null 2>&1 \
+    && source <(kustomize completion zsh)
+  command -v kustomize >/dev/null 2>&1 \
     && source <(kustomize completion zsh)
 fi
 
-# add autocompletion for minikube
-# Buggy in 1.21.0
-# if command -v minikube >/dev/null 2>&1 ; then
-#   source <(minikube completion zsh) ; fi
 
 ## adding some completion details from ohmyzsh
-zplug "ohmyzsh/ohmyzsh", depth:1, from:github, use:"lib/completion.zsh"
+zi snippet OMZ::lib/completion.zsh
+zi ice depth"1" && \
+  zi light zchee/zsh-completions
+
+# Adding the OMZ feature "clipboard/clippaste"
+zi snippet OMZ::lib/clipboard.zsh
 
 # Skip forward/back a word with CTRL-arrow
 bindkey "^[[1;5C" forward-word
@@ -110,30 +129,17 @@ bindkey "^[[1;5D" backward-word
 # adding backward-tab on menu completion
 bindkey "^[[Z" reverse-menu-complete
 
-# End of Zplug stuff Load, Install and reload Shell
-zplug load
 
-if ! zplug check --verbose ; then
-  echo "It Looks like we need to install some zplug Stuff"
-  echo "Why?: see team-dotfiles and zplug docs"
-  zplug install
-  exec $SHELL ; fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"
-
-# adding some bin paths
-test -d "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH"
-test -d "$HOME/.tfenv/bin" && export PATH="$HOME/.tfenv/bin:$PATH"
-test -d "$HOME/.tgenv/bin" && export PATH="$HOME/.tgenv/bin:$PATH"
-test -d "${HOME}/.krew" && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
+# Autocomplete Terraform and Terragrunt (they do not have somethig builtin)
+# Tarra-stuff
+command -v terraform >/dev/null 2>&1 && alias tf="terraform"
+command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"
 if command -v terraform >/dev/null 2>&1 ; then
   terraform_path=$(whereis terraform | awk '{print $NF }')
   complete -o nospace -C $terraform_path terraform tf
   # https://github.com/gruntwork-io/terragrunt/issues/689#issuecomment-822455663
-  command -v terragrunt >/dev/null 2>&1 \
-    && complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg ; fi
+  command -v terragrunt >/dev/null 2>&1 && \
+    complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg ; fi
 
 # helm autocompletion
 command -v helm >/dev/null 2>&1 \

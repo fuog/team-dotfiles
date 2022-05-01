@@ -1,8 +1,8 @@
 # Fuog's Dotfiles
 
-The idea behind this Repo is to share a zshrc between firends and multiple devices. You will need to have some shared-intrest in "how" a basic "shared-zshrc" should look like while also leaving space for personal stuff that others dont whant or you would not need on other devices.
+The idea behind this Repo is to share a zshrc between friends and multiple devices. You will need to have some shared-interest in "how" a basic "shared-zshrc" should look like while also leaving space for personal stuff that others don't want or you would not need on other devices.
 
-It's more or less a "let's colaborate on semi-personal stuff"
+It's more or less a "let's collaborate on semi-personal stuff"
 
 This repo will also respect code that is added by other tools to the main `.zshrc` while updating its own part.
 
@@ -35,7 +35,8 @@ This Repo does not install any prerequisites for the full features it can load a
   - `scripts` a list of scripts (from `./scripts` ) selected by the user and made available as alias in shell
 - the code should alway check if requierements are met before executing something within the rc
 - a update should always be possible
-- we dont use oh-my-zsh but zplug DONT combine oh-my-zsh with this repo
+- we don't use oh-my-zsh but [ZI](https://z.digitalclouds.dev/)
+  - don't combine oh-my-zsh with this repo's approach
 
 ## install dotfiles
 
@@ -91,4 +92,4 @@ Setting ADDITIONALS-File to .zshrc
 
 ## Links
 
-- Zplug (plugin manager) <https://github.com/zplug/zplug>
+- ZI (plugin manager) <https://z.digitalclouds.dev/>
