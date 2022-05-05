@@ -65,15 +65,16 @@ autoload -U colors && colors
 # The following lines were added by compinstall
 zstyle :compinstall filename "$HOME/.zshrc"
 # Theme for zsh, example font to use is "hack nerd font" see https://www.nerdfonts.com
-$internet_access && zi ice depth"1"
-$internet_access && zi light romkatv/powerlevel10k
+zi ice depth"1" && \
+  zi light romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 test -f "$HOME/.p10k.zsh" && source "$HOME/.p10k.zsh"
+
 # never load the ssh-agent if we are on a remote connection
 test -z "$SSH_CLIENT" && (
-  zi ice depth"1" pick"ssh-agent.zsh"
-  zi light bobsoppe/zsh-ssh-agent )
+  zi ice depth"1" pick"ssh-agent.zsh" && \
+    zi light bobsoppe/zsh-ssh-agent )
 
 # syntax-highlighting
 zi ice depth"1" && \
@@ -88,6 +89,8 @@ command -v grc >/dev/null 2>&1 && \
 zi ice depth"1" pick"/dev/null" multisrc"shell/{key-bindings,completion}.zsh" && \
   zi light junegunn/fzf
 
+zi ice depth"1" && \
+  zi light zsh-users/zsh-autosuggestions
 
 # Adding the Substing-history lookup
 zi ice depth"1" pick"zsh-history-substring-search.zsh" && \
@@ -106,7 +109,7 @@ if command -v kubectl >/dev/null 2>&1 ; then
     zi light unixorn/kubectx-zshplugin
   zi ice depth"1" pick"kube-aliases.plugin.zsh" atload"export KALIAS='$ZI[PLUGINS_DIR]/Dbz---kube-aliases'; export KRESOURCES='$ZI[PLUGINS_DIR]/Dbz---kube-aliases/docs/resources'" && \
     zi light Dbz/kube-aliases && \
-      complete -F __start_kubectl k
+      complete -F __start_kubectl k >/dev/null 2>&1
   command -v kustomize >/dev/null 2>&1 \
     && source <(kustomize completion zsh)
   command -v kustomize >/dev/null 2>&1 \
