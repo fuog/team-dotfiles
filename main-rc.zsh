@@ -106,8 +106,8 @@ zi ice depth"1" pick"zsh-expand.plugin.zsh" && \
 if command -v kubectl >/dev/null 2>&1 ; then
   source <(kubectl completion zsh)
   zi ice depth"1" pick"kubectx.plugin.zsh" && \
-    zi light unixorn/kubectx-zshplugin
-  zi ice depth"1" pick"kube-aliases.plugin.zsh" atload"export KALIAS='$ZI[PLUGINS_DIR]/Dbz---kube-aliases'; export KRESOURCES='$ZI[PLUGINS_DIR]/Dbz---kube-aliases/docs/resources'" && \
+    zi light fuog/kubectx-zshplugin # made my own fork because the rpo owner wants to stay on SSH pull at submodules
+  zi ice depth"1" pick"kube-aliases.plugin.zsh" at"fix_plugin" atload"export KALIAS='$ZI[PLUGINS_DIR]/Dbz---kube-aliases'; export KRESOURCES='$ZI[PLUGINS_DIR]/Dbz---kube-aliases/docs/resources'" && \
     zi light Dbz/kube-aliases && \
       complete -F __start_kubectl k >/dev/null 2>&1
   command -v kustomize >/dev/null 2>&1 \
