@@ -46,8 +46,7 @@ __Example__ for setting things up ..
 
 You may need to load your proxy first `source /etc/profile.d/10_proxy_settings.sh` because all were doing is HTTPS.
 
-```bash
-source 
+```bash 
 mkdir -p "$HOME/git"
 git clone https://github.com/fuog/team-dotfiles.git "$HOME/git/team-dotfiles"
 $HOME/git/team-dotfiles/install.zsh
