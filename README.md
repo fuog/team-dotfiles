@@ -42,14 +42,21 @@ This Repo does not install any prerequisites for the full features it can load a
 
 This is a quick way to install dotfiles:
 
-__Example2__ for setting things up without direct execution.. for some proxy problems ..
+__Example__ for setting things up .. 
+
+You may need to load your proxy first `source /etc/profile.d/10_proxy_settings.sh` because all were doing is HTTPS.
 
 ```bash
+source 
 mkdir -p "$HOME/git"
 git clone https://github.com/fuog/team-dotfiles.git "$HOME/git/team-dotfiles"
 $HOME/git/team-dotfiles/install.zsh
 exec $SHELL
+```
 
+Now, if you like you can add additional styles, and RC files.
+
+```bash
 dotfiles vimrc fuog-default.vimrc
 dotfiles p10k fuog-full.zsh
 dotfiles additionals fuog-default.zsh
