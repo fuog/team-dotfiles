@@ -42,32 +42,17 @@ This Repo does not install any prerequisites for the full features it can load a
 
 This is a quick way to install dotfiles:
 
-```bash
-$SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh") # will install to $HOME/git/team-dotfiles
-
-$SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh") "$HOME/git/private/dotfiles" # for custom locations
-```
-
-## More Copy&Paste
-
-__Example1__ for setting all up in two blows
-
-```bash
-mkdir -p "$HOME/git"; $SHELL <(curl -s "https://raw.githubusercontent.com/fuog/dotfiles/master/install.zsh")
-```
-
-```bash
-dotfiles vimrc fuog-default.vimrc; dotfiles p10k fuog-full.zsh; dotfiles additionals fuog-default.zsh
-```
-
 __Example2__ for setting things up without direct execution.. for some proxy problems ..
 
 ```bash
-mkdir -p "$HOME/git"; git clone https://github.com/fuog/team-dotfiles.git "$HOME/git/team-dotfiles"; $HOME/git/team-dotfiles/install.zsh
-```
+mkdir -p "$HOME/git"
+git clone https://github.com/fuog/team-dotfiles.git "$HOME/git/team-dotfiles"
+$HOME/git/team-dotfiles/install.zsh
+exec $SHELL
 
-```bash
-dotfiles vimrc fuog-default.vimrc; dotfiles p10k fuog-full.zsh; dotfiles additionals fuog-default.zsh
+dotfiles vimrc fuog-default.vimrc
+dotfiles p10k fuog-full.zsh
+dotfiles additionals fuog-default.zsh
 ```
 
 ## dotfiles tool usage
