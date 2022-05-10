@@ -138,6 +138,7 @@ bindkey "^[[Z" reverse-menu-complete
 command -v terraform >/dev/null 2>&1 && alias tf="terraform"
 command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"
 if command -v terraform >/dev/null 2>&1 ; then
+  export TERRAGRUNT_DOWNLOAD="/tmp/tg-stuff"
   terraform_path=$(whereis terraform | awk '{print $NF }')
   complete -o nospace -C $terraform_path terraform tf
   # https://github.com/gruntwork-io/terragrunt/issues/689#issuecomment-822455663

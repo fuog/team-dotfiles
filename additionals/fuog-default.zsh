@@ -3,6 +3,9 @@
 test -z "$PS1" \
 	&& echo -e "This script \033[00;31mshould be sourced\033[0m not executed" && exit 1
 
+# A all in one solution for extracting files
+zi snippet OMZ::plugins/extract
+
 # Here we have all the stuff that will not
 # in to the other categories
 
