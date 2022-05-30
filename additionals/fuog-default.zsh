@@ -44,10 +44,10 @@ command -v terragrunt >/dev/null 2>&1 && alias tg="terragrunt"
 alias reload-shell='exec ${SHELL}'
 
 # Autoinstall kubeseal if not present
-if ! command -v kubeseal >/dev/null 2>&1  && command -v kubectl >/dev/null 2>&1  ; then
+if ! command -v kubeseal >/dev/null 2>&1  && command -v kubectl >/dev/null 2>&1 && command -v go >/dev/null 2>&1  ; then
   GOOS="linux"
   GOARCH=$(go env GOARCH)
-  wget "https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-${GOOS}-${GOARCH}"
+    wget "https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-${GOOS}-${GOARCH}"
   sudo install -m 755 kubeseal-$GOOS-$GOARCH /usr/local/bin/kubeseal
   unset GOOS GOARCH
 fi
