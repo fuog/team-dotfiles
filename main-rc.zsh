@@ -13,6 +13,10 @@ test -z "$PS1" \
 # Check if we can reach the internet with HTTPS
 internet_access=true; timeout 1 curl https://ipinfo.io/ip >/dev/null 2>&1 || internet_access=false
 
+
+# https://stackoverflow.com/questions/30840651/what-does-autoload-do-in-zsh
+autoload -U +X bashcompinit && bashcompinit
+
 # make sure further rc and dot files are linked correctly
 test -f "$DOTFILES_REPO/linking-rc.zsh" \
   && source "$DOTFILES_REPO/linking-rc.zsh"
@@ -147,9 +151,6 @@ if command -v terraform >/dev/null 2>&1 ; then
 # helm autocompletion
 command -v helm >/dev/null 2>&1 \
   && source <(helm completion zsh)
-
-# https://stackoverflow.com/questions/30840651/what-does-autoload-do-in-zsh
-autoload -U +X bashcompinit && bashcompinit
 
 # Disable globbing on the remote path. because scp is broken
 # with zsh globbing-features
