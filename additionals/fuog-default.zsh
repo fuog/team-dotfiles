@@ -18,10 +18,9 @@ which kubectl >/dev/null 2>&1 && \
     export KUBE_EDITOR="vi"
 
 # setting go-stuff
-if command -v go >/dev/null 2>&1 ; then
-  mkdir -p "$HOME/.golib"
-  export GOPATH="$HOME/.golib"
-  export PATH="$PATH:$GOPATH/bin" ; fi
+mkdir -p "$HOME/.golib"
+export GOPATH="$HOME/.golib"
+export PATH="$PATH:$GOPATH/bin"
 
 # replace the normal cat
 command -v bat >/dev/null 2>&1 && alias cat=bat
