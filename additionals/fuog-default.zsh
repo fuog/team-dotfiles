@@ -29,6 +29,10 @@ command -v batcat >/dev/null 2>&1 && alias cat=batcat
 # for resetting some audio stuff
 command -v alsa >/dev/null 2>&1 && alias audio-reload="sudo alsa force-reload"
 
+# https://bytexd.com/how-to-flush-dns-cache-in-ubuntu/
+alias flush-dns="sudo killall -USR2 systemd-resolved"
+
+
 # adding Azure autocompletion https://gastaud.io/en/article/azure-cli-autocomplete/
 command -v az >/dev/null 2>&1 && \
   test -f "/etc/bash_completion.d/azure-cli" >/dev/null 2>&1 && \
