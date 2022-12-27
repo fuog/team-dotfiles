@@ -3,12 +3,17 @@
 test -z "$PS1" \
 	&& echo -e "This script \033[00;31mshould be sourced\033[0m not executed" && exit 1
 
+# Disable MacOS Homebrew Analytics
+export HOMEBREW_NO_ANALYTICS=1
 #Set base64 aliases for MacOS
 alias base64encode="openssl base64 -e <<<"
 alias base64decode="openssl base64 e <<<"
 
-# Here we have all the stuff that will not
-# in to the other categories
+# Do not store commands prefixed by a space in history
+setopt HIST_IGNORE_SPACE
+
+#Hook in direnv
+eval "$(direnv hook zsh)"
 
 # Setting default editor
 command -v code >/dev/null 2>&1 && \
