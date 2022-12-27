@@ -25,6 +25,11 @@ This Repo does not install any prerequisites for the full features it can load a
   - install [grc](https://github.com/garabik/grc)
   - install [fzf](https://github.com/junegunn/fzf) ( with `go get github.com/junegunn/fzf` or see [Howto](https://github.com/junegunn/fzf#installation) )
 
+### MacOS
+
+[You should install the GNU Utils to properly work with this repository on MacOS](https://gist.github.com/skyzyx/3438280b18e4f7c490db8a2a2ca0b9da)
+
+
 ## Principals
 
 - The core part of the dotfiles should be a consense of everyone that colaborates with this repo.
