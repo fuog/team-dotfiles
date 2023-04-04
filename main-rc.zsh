@@ -111,6 +111,7 @@ if command -v kubectl >/dev/null 2>&1 ; then
   source <(kubectl completion zsh)
   zi ice depth"1" pick"kubectx.plugin.zsh" && \
     zi light fuog/kubectx-zshplugin # made my own fork because the rpo owner wants to stay on SSH pull at submodules
+  # TODO: there is a bug if the kubectl is PATH-added after this line (eg. DevOps-Tools) has to be fixed in the future, workaround: have a kubectl already in path here by installing it with OS
   zi ice depth"1" pick"kube-aliases.plugin.zsh" at"fix_plugin" atload"export KALIAS='$ZI[PLUGINS_DIR]/Dbz---kube-aliases'; export KRESOURCES='$ZI[PLUGINS_DIR]/Dbz---kube-aliases/docs/resources'" && \
     zi light Dbz/kube-aliases && \
       complete -F __start_kubectl k >/dev/null 2>&1
