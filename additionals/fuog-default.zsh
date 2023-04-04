@@ -85,3 +85,5 @@ command -v xclip >/dev/null 2>&1 && alias apt-installed-pkg="comm -23 <(apt-mark
 command -v tkn >/dev/null 2>&1 && source <(tkn completion zsh)
 command -v k3d >/dev/null 2>&1 && source <(k3d completion zsh)
 command -v kube-bench >/dev/null 2>&1 && source <(kube-bench completion zsh) && compdef _kube-bench kube-bench
+
+return 0
