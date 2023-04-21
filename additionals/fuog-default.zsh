@@ -77,10 +77,11 @@ if command -v bw >/dev/null 2>&1 ; then
 fi
 
 # Pipe to clipboard (apt install xclip)
-command -v xclip >/dev/null 2>&1 && alias clip="xclip -selection c"
+command -v xclip >/dev/null 2>&1 && alias xclip="xclip -selection c"
 
 # list manually installed packages
-command -v xclip >/dev/null 2>&1 && alias apt-installed-pkg="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)"
+command -v xclip >/dev/null 2>&1 && \
+  alias apt-installed-pkg="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)"
 
 command -v tkn >/dev/null 2>&1 && source <(tkn completion zsh)
 command -v k3d >/dev/null 2>&1 && source <(k3d completion zsh)
