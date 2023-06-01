@@ -10,9 +10,12 @@ test -z "$PS1" \
 
 # Tools that should be installed for the full exp. : zsh, fzf, grc,
 
+# if employeer-proxy; settings need to be set first
+test -f /etc/profile.d/10_proxy_settings.sh && \
+  source /etc/profile.d/10_proxy_settings.sh
+  
 # Check if we can reach the internet with HTTPS
 internet_access=true; timeout 1 curl https://ipinfo.io/ip >/dev/null 2>&1 || internet_access=false
-
 
 # https://stackoverflow.com/questions/30840651/what-does-autoload-do-in-zsh
 autoload -U +X bashcompinit && bashcompinit
@@ -20,10 +23,6 @@ autoload -U +X bashcompinit && bashcompinit
 # make sure further rc and dot files are linked correctly
 test -f "$DOTFILES_REPO/linking-rc.zsh" \
   && source "$DOTFILES_REPO/linking-rc.zsh"
-
-# if employeer-proxy; settings need to be set first
-test -f /etc/profile.d/10_proxy_settings.sh && \
-  source /etc/profile.d/10_proxy_settings.sh
 
 # some history configurations
 export HISTFILE=~/.zsh_history # Where it gets saved
