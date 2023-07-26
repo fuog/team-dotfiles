@@ -59,6 +59,9 @@ fi
 command -v kubeseal >/dev/null 2>&1 && kubectl config get-clusters | grep "Privat-K3s-cluster" >/dev/null 2>&1 \
   && alias kubeseal-priv="kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets --format yaml"
 
+# Note: first-time setup:
+# 1. bw config server https://XYZ..
+# 2. bw login xyz@foo.ch
 # add bw_login
 if command -v bw >/dev/null 2>&1 ; then
   function bw_login {
