@@ -1,5 +1,7 @@
 # Fuog's Dotfiles
 
+> NOTE: i moved from zi to zinit (almost the same plugin manager)
+
 The idea behind this Repo is to share a zshrc between friends and multiple devices. You will need to have some shared-interest in "how" a basic "shared-zshrc" should look like while also leaving space for personal stuff that others don't want or you would not need on other devices.
 
 It's more or less a "let's collaborate on semi-personal stuff"

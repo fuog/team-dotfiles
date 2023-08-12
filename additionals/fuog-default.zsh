@@ -59,6 +59,19 @@ fi
 command -v kubeseal >/dev/null 2>&1 && kubectl config get-clusters | grep "Privat-K3s-cluster" >/dev/null 2>&1 \
   && alias kubeseal-priv="kubeseal --controller-name=sealed-secrets --controller-namespace=sealed-secrets --format yaml"
 
+# install rbw
+if ! command -v rbw >/dev/null 2>&1; then
+  mkdir -p $HOME/.local/bin
+  wget -q -O - "https://github.com/doy/rbw/releases/download/1.8.3/rbw_1.8.3_linux_amd64.tar.gz" \
+    | tar -zxf - --exclude='completion' -C "$HOME/.local/bin"
+fi
+
+update_bin_completion rbw gen-completions zsh
+update_bin_completion tkn completion zsh
+update_bin_completion k3d completion zsh
+update_bin_completion podman completion zsh
+update_bin_completion kube-bench completion zsh
+
 # Note: first-time setup:
 # 1. bw config server https://XYZ..
 # 2. bw login xyz@foo.ch
@@ -85,9 +98,5 @@ command -v xclip >/dev/null 2>&1 && alias xclip="xclip -selection c"
 # list manually installed packages
 command -v xclip >/dev/null 2>&1 && \
   alias apt-installed-pkg="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)"
-
-command -v tkn >/dev/null 2>&1 && source <(tkn completion zsh)
-command -v k3d >/dev/null 2>&1 && source <(k3d completion zsh)
-command -v kube-bench >/dev/null 2>&1 && source <(kube-bench completion zsh) && compdef _kube-bench kube-bench
 
 return 0

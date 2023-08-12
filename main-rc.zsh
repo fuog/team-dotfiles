@@ -2,6 +2,9 @@
 # Script sourcing check
 test -z "$PS1" \
 	&& echo -e "This script \033[00;31mshould be sourced\033[0m not executed" && exit 1
+
+source "$DOTFILES_REPO/functions.zsh"
+
 # ===========================
 # Fuog's Main ZSHRC file
 # ===========================
@@ -13,7 +16,7 @@ test -z "$PS1" \
 # if employeer-proxy; settings need to be set first
 test -f /etc/profile.d/10_proxy_settings.sh && \
   source /etc/profile.d/10_proxy_settings.sh
-  
+
 # Check if we can reach the internet with HTTPS
 internet_access=true; timeout 1 curl https://ipinfo.io/ip >/dev/null 2>&1 || internet_access=false
 
@@ -32,10 +35,10 @@ setopt append_history # Don't overwrite, append!
 setopt INC_APPEND_HISTORY # Write after each command
 setopt hist_expire_dups_first # Expire duplicate entries first when trimming history.
 setopt hist_fcntl_lock # use OS file locking
+setopt hist_save_no_dups # Don't write duplicate entries in the history file.
 setopt hist_ignore_all_dups # Delete old recorded entry if new entry is a duplicate.
 setopt hist_lex_words # better word splitting, but more CPU heavy
 setopt hist_reduce_blanks # Remove superfluous blanks before recording entry.
-setopt hist_save_no_dups # Don't write duplicate entries in the history file.
 setopt share_history # share history between multiple shells
 setopt HIST_IGNORE_SPACE # Don't record an entry starting with a space.
 
@@ -53,9 +56,23 @@ test -d "${HOME}/.krew" && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 
 # Install zi
-zi_home="${HOME}/.zi" && mkdir -p $zi_home
+#zi_home="${HOME}/.zi" && mkdir -p $zi_home
 # Download the Repo if we have internet_access
-test -d "${zi_home}/bin" || ( $internet_access && git clone https://github.com/z-shell/zi.git "${zi_home}/bin" )
+#test -d "${zi_home}/bin" || ( $internet_access && git clone https://github.com/z-shell/zi.git "${zi_home}/bin" )
+
+test -d "${HOME}/.zi" && rm -rf "${HOME}/.zi"
+
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# list all potential binaries that have completion generation integrated
+update_bin_completion kubectl completion zsh
+update_bin_completion helm completion zsh
+update_bin_completion helmfile completion zsh
+update_bin_completion m-git-helper completion zsh
+
 # Do load the 'ZI' cmd if file does exist
 test -f "${zi_home}/bin/zi.zsh" && \
   source "${zi_home}/bin/zi.zsh"
@@ -67,6 +84,7 @@ autoload -U colors && colors
 
 # The following lines were added by compinstall
 zstyle :compinstall filename "$HOME/.zshrc"
+
 # Theme for zsh, example font to use is "hack nerd font" see https://www.nerdfonts.com
 zi ice depth"1" && \
   zi light romkatv/powerlevel10k
@@ -89,7 +107,7 @@ command -v grc >/dev/null 2>&1 && \
     zi light garabik/grc
 
 # Load autocompletion and nice fzf key-bindings
-zi ice depth"1" pick"/dev/null" multisrc"shell/{key-bindings,completion}.zsh" && \
+zi ice depth"1" pick"/dev/null" as"completions" multisrc"shell/{key-bindings,completion}.zsh" && \
   zi light junegunn/fzf
 
 zi ice depth"1" && \
@@ -123,7 +141,7 @@ fi
 
 ## adding some completion details from ohmyzsh
 zi snippet OMZ::lib/completion.zsh
-zi ice depth"1" && \
+zi ice depth"1" as"completions" && \
   zi light zchee/zsh-completions
 
 # Adding the OMZ feature "clipboard/clippaste"
