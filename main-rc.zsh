@@ -72,6 +72,8 @@ update_bin_completion kubectl completion zsh
 update_bin_completion helm completion zsh
 update_bin_completion helmfile completion zsh
 update_bin_completion m-git-helper completion zsh
+update_bin_completion kustomize completion zsh
+update_bin_completion k9s completion zsh
 
 # Do load the 'ZI' cmd if file does exist
 test -f "${zi_home}/bin/zi.zsh" && \
@@ -95,7 +97,7 @@ test -f "$HOME/.p10k.zsh" && source "$HOME/.p10k.zsh"
 # never load the ssh-agent if we are on a remote connection
 test -z "$SSH_CLIENT" && (
   zi ice depth"1" pick"ssh-agent.zsh" && \
-    zi light bobsoppe/zsh-ssh-agent )
+    zi light fuog/zsh-ssh-agent )
 
 # syntax-highlighting
 zi ice depth"1" && \
@@ -132,12 +134,7 @@ if command -v kubectl >/dev/null 2>&1 ; then
   zi ice depth"1" pick"kube-aliases.plugin.zsh" at"fix_plugin" atload"export KALIAS='$ZI[PLUGINS_DIR]/Dbz---kube-aliases'; export KRESOURCES='$ZI[PLUGINS_DIR]/Dbz---kube-aliases/docs/resources'" && \
     zi light Dbz/kube-aliases && \
       complete -F __start_kubectl k >/dev/null 2>&1
-  command -v kustomize >/dev/null 2>&1 \
-    && source <(kustomize completion zsh)
-  command -v kustomize >/dev/null 2>&1 \
-    && source <(kustomize completion zsh)
 fi
-
 
 ## adding some completion details from ohmyzsh
 zi snippet OMZ::lib/completion.zsh
@@ -154,7 +151,6 @@ bindkey "^[[1;5D" backward-word
 # adding backward-tab on menu completion
 bindkey "^[[Z" reverse-menu-complete
 
-
 # Autocomplete Terraform and Terragrunt (they do not have somethig builtin)
 # Tarra-stuff
 command -v terraform >/dev/null 2>&1 && alias tf="terraform"
@@ -165,10 +161,6 @@ if command -v terraform >/dev/null 2>&1 ; then
   # https://github.com/gruntwork-io/terragrunt/issues/689#issuecomment-822455663
   command -v terragrunt >/dev/null 2>&1 && \
     complete -W "$(terragrunt | grep -A123 "COMMANDS" | head -n-7 | grep '^   ' | awk '{ print $1 }' | grep -v '*' | xargs)" terragrunt tg ; fi
-
-# helm autocompletion
-command -v helm >/dev/null 2>&1 \
-  && source <(helm completion zsh)
 
 # Disable globbing on the remote path. because scp is broken
 # with zsh globbing-features
