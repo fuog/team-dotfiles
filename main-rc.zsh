@@ -74,6 +74,7 @@ update_bin_completion helmfile completion zsh
 update_bin_completion m-git-helper completion zsh
 update_bin_completion kustomize completion zsh
 update_bin_completion k9s completion zsh
+update_bin_completion cilium completion zsh
 
 # Do load the 'ZI' cmd if file does exist
 test -f "${zi_home}/bin/zi.zsh" && \
