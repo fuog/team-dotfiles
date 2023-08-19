@@ -71,6 +71,7 @@ update_bin_completion tkn completion zsh
 update_bin_completion k3d completion zsh
 update_bin_completion podman completion zsh
 update_bin_completion kube-bench completion zsh
+update_bin_completion pv-migrate completion zsh
 
 # Note: first-time setup:
 # 1. bw config server https://XYZ..
